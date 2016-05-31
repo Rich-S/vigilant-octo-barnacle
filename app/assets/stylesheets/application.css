@@ -13,3 +13,50 @@
  *= require_tree .
  *= require_self
  */
+.panel.panel-default {
+	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 5px;
+	height: 150px;
+	width: 24.5%;
+}
+
+.panel-heading {
+	font-weight: bold;
+}
+.panel-body {
+	font-style: italic;
+	font-size: 12px;
+}
+
+#project_box_a:hover { background-color: #f5f5f5; }
+
+#project_box_a:hover #project_box_b { background-color: #dddddd; }
+
+
+#checkboxes label {
+	display: inline-block;
+	width: 24.5%;
+	height: 40px;
+	line-height: 25px;
+	border: .5px solid gray;
+	padding: 0px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	margin-right: 2px;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 12px;
+}
+
+#checkboxes input[type=checkbox]{
+    display: none;
+}
+
+#checkboxes input[type=checkbox]:checked + label {
+    background-color: #dddddd;
+}
+
+
+
+

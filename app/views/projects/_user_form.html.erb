@@ -1,0 +1,7 @@
+   <%= f.fields_for :milestones do |m| %>
+      <%= m.fields_for :milestone_programs do |mp| %>
+          <%= mp.fields_for :program do |p| %>
+               <%= p.text_field :name %>
+          <% end %>
+      <% end %>
+   <% end %>

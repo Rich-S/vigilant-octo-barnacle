@@ -1,8 +1,24 @@
-<h1>All Projects</h1>
-<%= will_paginate %>
+<div class="project_panel">
 
-<ul class="employees">
-  <%= render @projects %>
-</ul>
+  <div class="panel panel-default" id="project_box_a">
+    <div class="panel-heading" id="project_box_b">
+      <%= link_to 'New Project', new_project_path, :remote => true %>
+    </div>
+  </div>
 
-<%= will_paginate %>
+  <% @projects.each do |project| %>
+
+  <div class="panel panel-default" id="project_box_a">
+    <div class="panel-heading" id="project_box_b">
+      <%= link_to project.name, project, :remote => true %>
+    </div>  
+    <div class="panel-body">
+      <%= project.description %>
+    </div>
+  </div>
+
+  <% end %>
+  
+  <%= new_user_helper %>
+
+</div>
