@@ -33,7 +33,6 @@
 
 #project_box_a:hover #project_box_b { background-color: #dddddd; }
 
-
 #checkboxes label {
 	display: inline-block;
 	width: 24.5%;
@@ -56,6 +55,15 @@
 #checkboxes input[type=checkbox]:checked + label {
     background-color: #dddddd;
 }
+
+tr#miniform-new-user:hover {
+	background-color: #428bca;
+}
+
+tr#add-new-user:hover {
+	background-color: #428bca;
+}
+
 
 
 

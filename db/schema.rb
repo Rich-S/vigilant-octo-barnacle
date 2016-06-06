@@ -15,17 +15,21 @@ ActiveRecord::Schema.define(version: 20160530035237) do
 
   create_table "materials", force: :cascade do |t|
     t.string   "name"
+    t.string   "unit_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "project_materials", force: :cascade do |t|
-    t.integer  "material_id"
     t.integer  "project_id"
+    t.integer  "material_id"
     t.integer  "quantity"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "project_materials", ["material_id"], name: "index_project_materials_on_material_id"
+  add_index "project_materials", ["project_id"], name: "index_project_materials_on_project_id"
 
   create_table "project_users", force: :cascade do |t|
     t.integer  "user_id"

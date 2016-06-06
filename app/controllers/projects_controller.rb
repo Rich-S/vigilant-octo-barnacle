@@ -10,14 +10,20 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @users = @project.users
+    @materials = @project.project_materials
+    respond_to do |format|
+      format.html { render :partial => "show" }
+    end
   end
 
   def new
     @project = Project.new
+    @project.project_materials.build.build_material
   end
 
   def edit
     @project = Project.find(params[:id])
+    @material = @project.project_materials.build
   end
 
   def create
@@ -54,6 +60,20 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def index_users
+    @users = User.order(name: :asc)
+    respond_to do |format|
+      format.html { render :partial => "show_users" }
+    end
+  end
+
+  def try
+    @parametrics = [:name, :email]
+    respond_to do |format|
+      format.json { render "try" }
+    end
+  end
+  
   private
 
   def set_project
@@ -61,7 +81,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, { :user_ids => [] })
+    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity] })
   end
 
 end

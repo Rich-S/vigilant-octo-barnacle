@@ -7,18 +7,15 @@
   </div>
 
   <% @projects.each do |project| %>
-
-  <div class="panel panel-default" id="project_box_a">
+  <div class="panel panel-default" id="project_box_a" data-id="<%= project.id %>">
     <div class="panel-heading" id="project_box_b">
-      <%= link_to project.name, project, :remote => true %>
+      <%= project.name %>
     </div>  
     <div class="panel-body">
       <%= project.description %>
     </div>
   </div>
-
   <% end %>
-  
-  <%= new_user_helper %>
 
 </div>
+

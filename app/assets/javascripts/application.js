@@ -17,30 +17,57 @@
 //= require bootstrap/modal
 //= require_tree .
 
-//Incomplete modal
-//$(document).on("click", "#project_box_a", function(e) {
-//  $('#modal_form').modal('show');
-//});
 
-//Wanted to see if application.js can have two document calls - and yes it can
-//$(document).on("click", "#ggg", function(e) {
-//  $('#trial').hide();
-//});
+var showusers = function() {
+  $.ajax({
+    url: "/projects/index_users",
+    type: "GET",
+    success: function(data) {
+      $("#tag-ii").html(data);
+      $('#modal_display').modal('show');
+    }
+  });
+};
 
-//var projectids = [1,6];
+$(document).on("click", ".panel.panel-default", function() {
+  var project_id = $(this).attr('data-id');
+  $.ajax({
+  	url: "/projects/" + project_id,
+    type: "GET",
+    data: { "id" : project_id },
+    success: function(data) {
+      $("#tag").html(data);
+      $('#modal_form').modal('show');	
+    }
+  });
+});
 
-//$.each(projectids, function(index,value) {
-//  $(document).on("click", "#project_box_a" + value, function(e) {
-//    $.ajax({
-//      url: "/projects/" + value,
-//      success: function(data) {
-//        $('#modal_form').modal('show');
-//        $("#tag").html("<%= j render('show') %>");                      
-//        //alert(value);
-//      }
-//    });
-//  });
-//});
+$(document).on("click", "#employees", showusers);
+
+$(document).on("click", "#add-new-user", function() {
+  var mini = $("#miniform-new-user");
+  $(this).hide();
+  $(mini).show();
+});
+
+
+$(document).on("click", "#submit-new-user", function() {
+  var username = $("#input-user-name").val()
+  var email = $("#input-email").val()
+  var addnewuser = $('add-new-user');
+  $.ajax({
+    url: "/users",
+    type: "POST",
+    dataType: "json",
+    data: {
+      user: {
+        name: username,
+        email: email
+      }
+    },
+    success: showusers
+  }); 
+});
 
 
 
@@ -48,4 +75,4 @@
 
 
 
-//$('#vote_<%= @review.id %>').html("<%= escape_javascript render :partial => 'votes/vote' %>");
+
