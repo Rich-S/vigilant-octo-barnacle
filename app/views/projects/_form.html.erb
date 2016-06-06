@@ -1,4 +1,5 @@
 <%= form_for(@project) do |f| %>
+
   <% @project.name ||= "New Project" %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -10,11 +11,14 @@
       </ul>
     </div>
   <% end %>
+
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="myModalLabel">Superior Construction</h4>
   </div>
+
   <div class="modal-body">
+
     <div class="form-group">
       <%= f.text_field(:name, class: "form-control") %>
     </div>
@@ -23,22 +27,28 @@
     </div>
     <div class="control-group" id="checkboxes">
       <%= f.collection_check_boxes :user_ids, User.all, :id, :name %> 
-    </div>
-   
-    <div class="modal-body">
-      <%= f.fields_for :project_materials do |pm| %>
+    </div>  
+    <%= f.fields_for :project_materials do |pm| %>
+    <div class="row">
       <div class="form-group">
+        <div class="col-lg-5">
         <%= pm.collection_select :material_id, Material.order(:name), :id, :name, { prompt: "Please select", include_blank: false }, class: "form-control" %>
-        <%= pm.number_field :quantity, class: "form-control" %>
-      </div>  
-      <% end %>
-    </div>
-    
-
+        </div>
+        <div class="col-lg-5">
+        <%= pm.number_field :quantity, class: "form-control" %> 
+        </div> 
+        <div class="col-lg-2">
+        <%= pm.check_box :_destroy %>Delete
+        </div>
+      </div>
+    </div><div class="space"></div>
+    <% end %>
 
   </div><!--modal-body-->
+
   <div class="modal-footer">
     <%= f.submit class: "btn btn-primary" %>
     <%= link_to "Cancel", projects_path, class: "btn-default", data: {dismiss: "modal"} %>
   </div><!--modal-footer-->
+
 <% end %>

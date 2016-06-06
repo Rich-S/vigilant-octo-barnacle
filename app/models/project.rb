@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
 
 	
   #accepts_nested_attributes_for :project_users
-  accepts_nested_attributes_for :project_materials, reject_if: :all_blank#, :allow_destroy => true, :reject_if => :all_blank
+  accepts_nested_attributes_for :project_materials, allow_destroy: true, reject_if: :all_blank#, :allow_destroy => true, :reject_if => :all_blank
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true

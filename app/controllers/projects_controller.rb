@@ -18,7 +18,8 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    @project.project_materials.build.build_material
+    @material = @project.project_materials.build
+    @material.build_material
   end
 
   def edit
@@ -66,13 +67,6 @@ class ProjectsController < ApplicationController
       format.html { render :partial => "show_users" }
     end
   end
-
-  def try
-    @parametrics = [:name, :email]
-    respond_to do |format|
-      format.json { render "try" }
-    end
-  end
   
   private
 
@@ -81,7 +75,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity] })
+    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity, :_destroy] })
   end
 
 end
