@@ -30,11 +30,11 @@
 
     <h4>Assigned Employees</h4> 
     <div class="form-group" id="checkboxes">
-      <%= f.collection_check_boxes :user_ids, User.all, :id, :name %> 
+      <%= f.collection_check_boxes :user_ids, User.order(name: :asc), :id, :name %> 
     </div> 
     <br> 
     
-    <h4>Materials Need</h4>
+    <h4>Materials Needed</h4>
     <div class="form-group">
     <%= f.fields_for :project_materials do |pm| %>
       <%= render partial: 'form_materials', locals: { pm: pm } %>    

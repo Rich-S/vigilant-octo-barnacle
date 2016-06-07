@@ -15,9 +15,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.update(user_params)
     redirect_to projects_url
-    #respond_to do |format|
-    #  format.html { redirect_to projects_url }
-    #end
   end
 
   def show

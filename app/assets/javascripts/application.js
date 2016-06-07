@@ -41,6 +41,17 @@ var showusers = function() {
     }
   });
 };
+//calls on materials used
+var showmaterials = function() {
+  $.ajax({
+    url: "/projects/index_materials",
+    type: "GET",
+    success: function(data) {
+      $("#tag-ii").html(data);
+      $('#modal_display').modal('show');
+    }
+  });
+};
 //ajax call to post new user
 var addnewuser = function() {
   var username = $("#input-user-name").val()
@@ -61,6 +72,8 @@ var addnewuser = function() {
 };
 //calls on list of employees
 $(document).on("click", "#employees", showusers);
+//calls on list of materials
+$(document).on("click", "#inventories", showmaterials);
 //option to add new employee
 $(document).on("click", "#add-new-user", function() {
   var mini = $("#miniform-user");
@@ -80,13 +93,18 @@ $(document).on("click", "#submit-new-user", addnewuser);
 $(document).on("click", "a.userlink-edit", function() {
   var id = $(this).attr("id")
   var row = $("tr#" + id)
-  var rowclone = $(row).clone()
   var name = $("#show-users").find(row).find($("td.name")).html()
   var email = $("#show-users").find(row).find($("a.email")).html()
-  var input = $('<tr><td><input class=form-control placeholder=' + name + ' id=iusername></td><td><input class=form-control placeholder=' + email + ' id=iemail></td><td><button class="btn btn-default" id="submit-edit">Submit</button></td><td></td></tr>');
-  $(row).replaceWith($(input));
+  var input = $('<tr><td><input class=form-control id=iusername value='+name+'></td><td><input class=form-control value='+email+' id=iemail></td><td><button class="btn btn-default" id="submit-edit">Submit</button></td><td><button class="btn btn-default" id="cancel-edit">Cancel</button></td></tr>');
+  $(row).hide();
+  $(input).insertAfter($(row));
+  $("button#cancel-edit").on("click", function() {
+    $(row).show();
+    $(input).remove();
+  });
   $("button#submit-edit").on("click", function() {
     var username = $("#iusername").val()
+    var usernameClone = $(username).clone
     var email = $("#iemail").val();
     $.ajax({
       url: "/users/" + id,
@@ -98,16 +116,21 @@ $(document).on("click", "a.userlink-edit", function() {
           email: email
         }
       },
-      success: showusers//alert("saved! please exit out of the form")//function() {$('#modal_display').modal('show')}
+      success: $('#modal_display').modal("hide")
     });
-    $(input).replaceWith($(rowclone));
   });
 });
-//$(document).on("dblclick", "tr.user", function() {
-//  var id = $(this).attr("id")
-//  var customform = $("<tr id='miniform-user-edit'" + id "><td><input class='form-control' id='input-user-name'></td><td><input class='form-control' id='input-email'></td><td><button class='btn btn-default' id='edit-user'>Submit</button></td><td></td></tr>");
-//  $(this).replaceWith($(customform));
-//});
+
+//ajax call to delete user instance
+$(document).on("click", "a.userlink-delete", function() {
+  var id = $(this).attr("id");
+  $.ajax({
+    url: "/users/" + id,
+    type: "DELETE",
+    success: $('#modal_display').modal("hide")
+  });
+});
+
 
 
 

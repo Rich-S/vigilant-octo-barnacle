@@ -25,13 +25,16 @@
       <tr>
         <th>Material</th>
         <th>Quantity</th>
+        <th>Unit Types</th>
       </tr>
     </thead>
     <tbody>
-      <% @materials.each do |material| %>
+      <% @project_materials.each do |pm| %>
+      <% material = Material.find(pm.material_id) %>
       <tr>
-        <td><%=Material.find(material.material_id).name%></td>
-        <td><%=material.quantity%></td>
+        <td><%=material.name%></td>
+        <td><%=pm.quantity%></td>
+        <td><%=material.unit_type%></td>
       </tr>
       <% end %>         
     </tbody>

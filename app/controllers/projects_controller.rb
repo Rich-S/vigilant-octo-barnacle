@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @users = @project.users
-    @materials = @project.project_materials
+    @project_materials = @project.project_materials
     respond_to do |format|
       format.html { render :partial => "show" }
     end
@@ -70,6 +70,13 @@ class ProjectsController < ApplicationController
     @users = User.order(name: :asc)
     respond_to do |format|
       format.html { render :partial => "show_users" }
+    end
+  end
+
+  def index_materials
+    @inventory = Material.inventory
+    respond_to do |format|
+      format.html { render :partial => "show_materials" }
     end
   end
   
