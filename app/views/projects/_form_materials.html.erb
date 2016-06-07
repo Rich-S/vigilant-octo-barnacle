@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-lg-5">
+    <%= pm.collection_select :material_id, Material.order(:name), :id, :name, { prompt: "Please select", include_blank: false }, class: "form-control" %>
+  </div>
+  <div class="col-lg-5">
+    <%= pm.number_field :quantity, class: "form-control" %> 
+  </div> 
+  <div class="col-lg-2">        
+    <%= pm.check_box :_destroy, id:"checkboxes" %>
+    <%= pm.label :_destroy, "delete" %>
+  </div>
+</div><div class="space"></div>  

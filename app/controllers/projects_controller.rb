@@ -19,12 +19,15 @@ class ProjectsController < ApplicationController
   def new
     @project = Project.new
     @material = @project.project_materials.build
-    @material.build_material
+    @project.materials.build
   end
 
   def edit
     @project = Project.find(params[:id])
-    @material = @project.project_materials.build
+    3.times {
+      @material = @project.project_materials.build
+      @material.build_material 
+    }
   end
 
   def create
@@ -75,7 +78,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity, :_destroy] })
+    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :materials_attributes => [:id, :name, :unit_type] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity, :_destroy]})
   end
 
 end

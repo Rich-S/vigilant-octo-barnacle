@@ -19,30 +19,35 @@
 
   <div class="modal-body">
 
+    <h4>Project Description</h4>
     <div class="form-group">
       <%= f.text_field(:name, class: "form-control") %>
     </div>
     <div class="form-group">
       <%= f.text_area(:description, class: "form-control", placeholder: "Project Description") %>
     </div>
-    <div class="control-group" id="checkboxes">
+    <br>
+
+    <h4>Assigned Employees</h4> 
+    <div class="form-group" id="checkboxes">
       <%= f.collection_check_boxes :user_ids, User.all, :id, :name %> 
-    </div>  
+    </div> 
+    <br> 
+    
+    <h4>Materials Need</h4>
+    <div class="form-group">
     <%= f.fields_for :project_materials do |pm| %>
-    <div class="row">
-      <div class="form-group">
-        <div class="col-lg-5">
-        <%= pm.collection_select :material_id, Material.order(:name), :id, :name, { prompt: "Please select", include_blank: false }, class: "form-control" %>
-        </div>
-        <div class="col-lg-5">
-        <%= pm.number_field :quantity, class: "form-control" %> 
-        </div> 
-        <div class="col-lg-2">
-        <%= pm.check_box :_destroy %>Delete
-        </div>
-      </div>
-    </div><div class="space"></div>
+      <%= render partial: 'form_materials', locals: { pm: pm } %>    
     <% end %>
+    <br>
+
+    <h4>New Material Types</h4>
+    <% 3.times do %>
+      <%= f.fields_for :materials, Material.new do |m| %>
+      <%= render partial: 'form_materials_new', locals: { m: m } %> 
+      <% end %>
+    <% end %>
+    <br>
 
   </div><!--modal-body-->
 
