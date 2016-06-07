@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
-
+  
+  respond_to :js,:json,:html 
+  #before_action :set_project, only: [:show, :edit, :update, :destroy]
+  
   def index
     @users = User.paginate(page: params[:page], per_page: 5)
   end
@@ -11,11 +14,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash.now[:notice] = "#{@user.name.capitalize} has been created!"
+      render json: { status: 'success' }
+      #flash.now[:notice] = "#{@user.name.capitalize} has been created!"
     else
-      flash.now[:warning] = "No user has been created!"
+      
+      #flash.now[:warning] = "No user has been created!"
     end
-    render 'new'
+    #render 'new'
   end
 
   def destroy

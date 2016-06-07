@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title" id="myModalLabel"><%=@project.name%></h4>  
+</div>
+
+<div class="modal-body">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+      <tr>
+        <td><%=user.name%></td>
+        <td><a href="#"><%=user.email%></a></td>
+      </tr>
+      <% end %>         
+    </tbody>
+  </table>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @materials.each do |material| %>
+      <tr>
+        <td><%=Material.find(material.material_id).name%></td>
+        <td><%=material.quantity%></td>
+      </tr>
+      <% end %>         
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <%= render partial: 'options', locals: { project: @project } %>
+</div>
