@@ -1,9 +1,15 @@
 module ProjectsHelper
   def list_names_tag(var)
-  	content_tag(:tr) do 
-  	  content_tag(:td, var.name) +
+  	content_tag(:tr, class: "user", id: "#{var.id}") do 
+  	  content_tag(:td, var.name, class:"name") +
   	  content_tag(:td) do 
-  	    content_tag(:a, var.email)
+  	    content_tag(:a, var.email, class:"email")
+  	  end +
+  	  content_tag(:td) do
+  	  	content_tag(:a, "edit", class: "userlink-edit", id: var.id)
+  	  end +
+  	  content_tag(:td) do
+  	  	content_tag(:a, "delete", class: "userlink-delete", id: var.id)
   	  end 		
   	end
   end

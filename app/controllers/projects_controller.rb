@@ -18,8 +18,10 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    @material = @project.project_materials.build
-    @project.materials.build
+    3.times {
+      @material = @project.project_materials.build
+      @material.build_material
+    }
   end
 
   def edit

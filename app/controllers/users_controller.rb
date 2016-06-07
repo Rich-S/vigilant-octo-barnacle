@@ -7,6 +7,19 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page], per_page: 5)
   end
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update(user_params)
+    redirect_to projects_url
+    #respond_to do |format|
+    #  format.html { redirect_to projects_url }
+    #end
+  end
+
   def show
     @user = User.find(params[:id])
   end
@@ -15,12 +28,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       render json: { status: 'success' }
-      #flash.now[:notice] = "#{@user.name.capitalize} has been created!"
-    else
-      
-      #flash.now[:warning] = "No user has been created!"
+    else  
     end
-    #render 'new'
   end
 
   def destroy
@@ -37,4 +46,5 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email)
     end
+
 end
