@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @users = @project.users
-    @materials = @project.project_materials
+    @project_materials = @project.project_materials
     respond_to do |format|
       format.html { render :partial => "show" }
     end
@@ -18,12 +18,18 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
-    @project.project_materials.build.build_material
+    3.times {
+      @material = @project.project_materials.build
+      @material.build_material
+    }
   end
 
   def edit
     @project = Project.find(params[:id])
-    @material = @project.project_materials.build
+    3.times {
+      @material = @project.project_materials.build
+      @material.build_material 
+    }
   end
 
   def create
@@ -67,10 +73,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def try
-    @parametrics = [:name, :email]
+  def index_materials
+    @inventory = Material.inventory
     respond_to do |format|
-      format.json { render "try" }
+      format.html { render :partial => "show_materials" }
     end
   end
   
@@ -81,7 +87,7 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity] })
+    params.require(:project).permit(:name, :description, { :user_ids => [] }, { :materials_attributes => [:id, :name, :unit_type] }, { :project_materials_attributes => [:id, :material_id, :project_id, :quantity, :_destroy]})
   end
 
 end
